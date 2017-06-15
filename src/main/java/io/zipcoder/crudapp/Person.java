@@ -17,6 +17,8 @@ public class Person {
   private String name;
   private Integer age;
 
+  public Person() {}
+
   public Person(String theirName, Integer theirAge) {
     name = theirName;
     age = theirAge;
