@@ -14,15 +14,35 @@ public class Person {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
-  private String firstName;
-  private String lastName;
-  private String gender;
+  private String name;
+  private Integer age;
+
+  public Person(String theirName, Integer theirAge) {
+    name = theirName;
+    age = theirAge;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
 
   @Override
   public String toString() {
     return String.format(
-            "Person[id=%d, firstName=%s, lastName=%s, gender=%s]",
-            id, firstName, lastName, gender);
+            "Person[id=%d, name=%s, age=%d]",
+            id, name, age);
   }
 
 
