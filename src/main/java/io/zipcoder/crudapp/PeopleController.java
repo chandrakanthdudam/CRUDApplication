@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sun.net.httpserver.Authenticator.Success;
-import com.sun.net.httpserver.Authenticator.Result;
+import com.sun.net.httpserver.Authenticator.Failure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -36,7 +33,11 @@ public class PeopleController {
   }
 
   @RequestMapping(value = "/", method = RequestMethod.PUT)
-  public ResponseEntity putPerson() {
-    return new ResponseEntity<Success>(HttpStatus.OK);
+  public ResponseEntity putPerson(@RequestBody Person person) {
+    System.out.println(person);
+    if (person.isValid()) {
+      return new ResponseEntity<Success>(HttpStatus.OK);
+    }
+    return new ResponseEntity<Failure>(HttpStatus.BAD_REQUEST);
   }
 }

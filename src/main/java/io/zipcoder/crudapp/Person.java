@@ -40,6 +40,11 @@ public class Person {
     this.age = age;
   }
 
+  public boolean isValid() {
+    if (name == null || age == null) return false;
+    return true;
+  }
+
   @Override
   public String toString() {
     return String.format(
