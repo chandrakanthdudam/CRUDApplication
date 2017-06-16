@@ -48,6 +48,15 @@ public class PeopleController {
     return new ResponseEntity<Failure>(HttpStatus.BAD_REQUEST);
   }
 
+  @RequestMapping(value = "/", method = RequestMethod.DELETE)
+  public ResponseEntity deletePerson(@RequestBody Person person) {
+    if (hasId(person)) {
+      repository.delete(person.getId());
+      return new ResponseEntity<Success>(HttpStatus.OK);
+    }
+    return new ResponseEntity<Failure>(HttpStatus.BAD_REQUEST);
+  }
+
   private boolean isValid(Person person) {
     if (person.getName() == null || person.getName() == null) return false;
     return true;
