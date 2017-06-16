@@ -18,7 +18,7 @@ public class Person {
 
   @Column(name = "AGE")
   private Integer age;
-  
+
 
   public Person() {}
 

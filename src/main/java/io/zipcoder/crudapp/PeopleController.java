@@ -35,7 +35,14 @@ public class PeopleController {
   @RequestMapping(value = "/", method = RequestMethod.PUT)
   public ResponseEntity putPerson(@RequestBody Person person) {
     if (isValid(person)) {
-      repository.save(person);
+      if (hasId(person)) {
+        Person db = repository.findOne(person.getId());
+        db.setName(person.getName());
+        db.setAge(person.getAge());
+        repository.save(db);
+      } else {
+        repository.save(person);
+      }
       return new ResponseEntity<Success>(HttpStatus.OK);
     }
     return new ResponseEntity<Failure>(HttpStatus.BAD_REQUEST);
