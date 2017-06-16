@@ -34,10 +34,21 @@ public class PeopleController {
 
   @RequestMapping(value = "/", method = RequestMethod.PUT)
   public ResponseEntity putPerson(@RequestBody Person person) {
-    System.out.println(person);
-    if (person.isValid()) {
+    if (isValid(person)) {
+      repository.save(person);
       return new ResponseEntity<Success>(HttpStatus.OK);
     }
     return new ResponseEntity<Failure>(HttpStatus.BAD_REQUEST);
   }
+
+  private boolean isValid(Person person) {
+    if (person.getName() == null || person.getName() == null) return false;
+    return true;
+  }
+
+  private boolean hasId(Person person) {
+    return person.getId()!= null;
+  }
+
+
 }
