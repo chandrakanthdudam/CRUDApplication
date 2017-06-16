@@ -2,6 +2,7 @@ package io.zipcoder.crudapp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.net.httpserver.Authenticator.Success;
 import com.sun.net.httpserver.Authenticator.Failure;
@@ -57,13 +58,40 @@ public class PeopleController {
     return new ResponseEntity<Failure>(HttpStatus.BAD_REQUEST);
   }
 
+  @RequestMapping(method = RequestMethod.POST)
+  public ResponseEntity placePerson(@RequestBody Map<String, Person> people) {
+    people.forEach((k, v) -> {
+      if (isValid(v)) {
+        evaluatePostRequest(k, v);
+      }
+    });
+    return new ResponseEntity<Success>(HttpStatus.OK);
+  }
+
   private boolean isValid(Person person) {
     if (person.getName() == null || person.getName() == null) return false;
     return true;
   }
 
   private boolean hasId(Person person) {
-    return person.getId()!= null;
+    return person.getId() != null;
+  }
+
+  private boolean evaluatePostRequest(String action, Person person) {
+    switch(action) {
+      case "put":
+        repository.save(person);
+        return true;
+      case "delete":
+        if (hasId(person)) {
+          repository.delete(person.getId());
+          return true;
+        }
+        return false;
+      default:
+        return false;
+
+    }
   }
 
 
