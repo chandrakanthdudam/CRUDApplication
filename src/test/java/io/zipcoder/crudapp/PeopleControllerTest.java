@@ -48,22 +48,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by aaronlong on 6/16/17.
  */
 @RunWith(SpringRunner.class)
-//@WebMvcTest(PeopleController.class)
+@WebMvcTest(PeopleController.class)
 public class PeopleControllerTest {
-
+  @Autowired
   private MockMvc mvc;
 
   @MockBean
   private PersonRepository repository;
 
-  @Mock
+  @MockBean
   private PeopleController controller;
 
   @Before
   public void init() {
+    // Read Up On
     MockitoAnnotations.initMocks(this);
-    mvc = MockMvcBuilders.standaloneSetup(controller)
-                      .build();
   }
 
   @Test
@@ -72,7 +71,7 @@ public class PeopleControllerTest {
             new Person( "Daenerys Targaryen", 2),
             new Person( "John Snow", 2));
 
-    when(controller.getPeople()).thenReturn(users);
+    //when(controller.getPeople()).thenReturn(users);
 
     this.mvc.perform(get("/person/"))
                  .andExpect(status().isOk())
